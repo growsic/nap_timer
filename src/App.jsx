@@ -7,6 +7,17 @@ export default function App() {
   const [running, setRunning] = useState(false)
 
   useEffect(() => {
+    if (!running && totalSeconds > 0 && secondsLeft === 0) {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)()
+      const osc = ctx.createOscillator()
+      osc.frequency.value = 880
+      osc.connect(ctx.destination)
+      osc.start()
+      osc.stop(ctx.currentTime + 0.3)
+    }
+  }, [running, secondsLeft, totalSeconds])
+
+  useEffect(() => {
     if (!running) return
     if (secondsLeft <= 0) {
       setRunning(false)
@@ -33,11 +44,12 @@ export default function App() {
   let color = '#00ff00'
   if (progress < 0.3) color = '#ffff00'
   if (progress < 0.1) color = '#ff2a2a'
+  const flash = running && secondsLeft <= 10
 
   return (
     <div className="container">
       <h1 className="title">活動限界まであと</h1>
-      <div className="timer" style={{ color }}>
+      <div className={`timer ${flash ? 'flash' : ''}`} style={{ color }}>
         {String(h).padStart(2, '0')}:{String(m).padStart(2, '0')}:{String(s).padStart(2, '0')}
       </div>
       <div className="bar-wrapper">
@@ -55,7 +67,12 @@ export default function App() {
         </div>
       )}
       {!running && totalSeconds > 0 && secondsLeft === 0 && (
-        <div className="finished">起床指令</div>
+        <div className="finished">
+          起床指令
+          <div>
+            <button onClick={() => setInputMinutes('')}>もう一度</button>
+          </div>
+        </div>
       )}
     </div>
   )
