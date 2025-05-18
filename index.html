@@ -1,39 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-</head>
-<body>
-  <div id="TimeLeft">default</div>
-  <div><p>now:<span id="nowDate"></span></p></div>
-  <script type="text/javascript">
-    $(function() {
-      countDown(1000000);
-      $("#nowDate").text(today.toLocaleString());
-
-    });
-    var today = new Date();
-    var target = new Date(today.getDate()+3000000);
-    var timeLimit = target - today;
-    // var leftTime = 100000;
-    const SECOND = 1000;
-    const MINITUE = 60 * SECOND;
-    const HOUR = 60 * MINITUE;
-    const DAY = 24 * HOUR;
-    function countDown (time) {
-      var leftTime = time;
-      var h = Math.floor(((leftTime)%(DAY))/(HPUR))
-      var m = Math.floor(((leftTime)%(DAY)))/(MINITUE))%60
-      var s = Math.floor(((leftTime)%(DAY))/SECOND)%60%60
-      leftTime -= 1000;
-    $("#TimeLeft").text(h+'時間'+m+'分'+s+'秒');
-      setTimeout('countDown()', 1000);
-    }
-    function getRemainingTime () {
-
-    }
-  </script>
-</body>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nap Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#ff2a2a" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
